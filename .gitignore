@@ -1,0 +1,16 @@
+# Python
+__pycache__/
+*.pyc
+
+# Database & Storage (Private data)
+history.db
+internal_storage/
+
+# Environment & Build
+venv/
+dist/
+build/
+*.spec
+
+# OS files
+.DS_Store
