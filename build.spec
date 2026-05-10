@@ -57,22 +57,20 @@ pyz = PYZ(a.pure, a.zipped_data, cipher=block_cipher)
 exe = EXE(
     pyz,
     a.scripts,
-    [],
-    exclude_binaries=True,
+    a.binaries,         # Add this
+    a.zipfiles,         # Add this
+    a.datas,            # Add this
     name='MediaToolkitPro',
     debug=False,
     bootloader_ignore_signals=False,
     strip=False,
-    upx=True,           # compress with UPX if installed: https://upx.github.io/
-    upx_exclude=[],
-    runtime_tmpdir=None,
-    console=False,      # no console window
+    upx=True,
+    console=False,      # 
     disable_windowed_traceback=True,
     argv_emulation=False,
     target_arch=None,
     codesign_identity=None,
     entitlements_file=None,
-    # icon='icon.ico',  # uncomment and add your .ico file
 )
 
 coll = COLLECT(
