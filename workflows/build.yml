@@ -1,9 +1,14 @@
-name: Build Windows EXE
+name: Multi-Platform Build
 on: [push]
 
 jobs:
   build:
-    runs-on: windows-latest  # Use a native Windows machine
+    name: Build on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        # Define the operating systems to build on
+        os: [windows-latest, ubuntu-latest, macos-latest]
 
     steps:
     - uses: actions/checkout@v4
@@ -14,7 +19,13 @@ jobs:
         python-version: '3.11'
         cache: 'pip'
 
-    - name: Install Dependencies
+    - name: Install System Dependencies (Linux Only)
+      if: matrix.os == 'ubuntu-latest'
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y libpulse-dev libasound2-dev  # Required for pygame/audio
+
+    - name: Install Python Dependencies
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
@@ -27,5 +38,5 @@ jobs:
     - name: Upload Artifact
       uses: actions/upload-artifact@v4
       with:
-        name: MediaToolkitPro-Windows
+        name: MediaToolkitPro-${{ matrix.os }}
         path: dist/
