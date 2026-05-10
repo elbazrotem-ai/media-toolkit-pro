@@ -44,9 +44,8 @@ except ImportError:
     HAVE_TQDM = False
 
 APP_NAME    = "MediaToolkit Pro"
-APP_VERSION = "1.0.0"
-GITHUB_REPO = "your-username/your-repo"   # ← update if you use the updater
-
+APP_VERSION = "1.0.5"
+GITHUB_REPO = "elbazrotem-ai/media-toolkit-pro" 
 
 # ── App directories ────────────────────────────────────────────────────────────
 

@@ -1,38 +1,21 @@
-# build.spec  —  PyInstaller build script for MediaToolkit Pro
-#
-# Usage:
-#   pyinstaller build.spec
-#
-# For maximum source-code protection, obfuscate with PyArmor first:
-#   pip install pyarmor
-#   pyarmor gen app.py          # outputs to dist/pyarmor_runtime_*/
-#   # edit the 'script' path below to point at the obfuscated copy
-#   pyinstaller build.spec
-#
-# The resulting executable will be in:   dist/MediaToolkitPro/
+# -*- mode: python ; coding: utf-8 -*-
+import sys
+import os
 
-import sys, os
-
-block_cipher = None   # PyInstaller ≥ 5 removed the --key cipher; use PyArmor instead.
+block_cipher = None
 
 a = Analysis(
     ['app.py'],
     pathex=['.'],
     binaries=[],
-    datas=[
-        # If you add an icon file, include it:
-        # ('icon.ico', '.'),
-    ],
+    datas=[],
     hiddenimports=[
-        # faster-whisper / ctranslate2 sometimes need these:
         'ctranslate2',
         'faster_whisper',
         'huggingface_hub',
         'tokenizers',
-        # pygame
         'pygame',
         'pygame.mixer',
-        # PySide6 extras (Qt platform plugins etc.)
         'PySide6.QtSvg',
         'PySide6.QtXml',
     ],
@@ -40,7 +23,6 @@ a = Analysis(
     hooksconfig={},
     runtime_hooks=[],
     excludes=[
-        # Not needed — keeps the binary smaller
         'yt_dlp',
         'tkinter',
         'matplotlib',
@@ -57,29 +39,18 @@ pyz = PYZ(a.pure, a.zipped_data, cipher=block_cipher)
 exe = EXE(
     pyz,
     a.scripts,
-    a.binaries,         # Add this
-    a.zipfiles,         # Add this
-    a.datas,            # Add this
+    a.binaries,
+    a.zipfiles,
+    a.datas,
     name='MediaToolkitPro',
     debug=False,
     bootloader_ignore_signals=False,
     strip=False,
     upx=True,
-    console=False,      # 
+    console=False,
     disable_windowed_traceback=True,
     argv_emulation=False,
     target_arch=None,
     codesign_identity=None,
     entitlements_file=None,
-)
-
-coll = COLLECT(
-    exe,
-    a.binaries,
-    a.zipfiles,
-    a.datas,
-    strip=False,
-    upx=True,
-    upx_exclude=[],
-    name='MediaToolkitPro',
 )
